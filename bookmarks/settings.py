@@ -129,3 +129,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# EMAIL_HOST = 'vm109517.keyweb.ru'
+# EMAIL_HOST_USER = 'r.boyko@standart.ua'  # добавить функцию для вызова email конкретного пользователя
+# EMAIL_HOST_PASSWORD = '9&w3H@YgsCk9'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
