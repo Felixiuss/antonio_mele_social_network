@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from . forms import LoginForm
+from . forms import LoginForm, UserRegistrationForm
 
 
 def user_login(request):
@@ -30,3 +30,20 @@ def user_login(request):
 def dashboard(request):
     # обработчик для отображения рабочего стола, который пользователь увидит при входе в свой аккаунт
     return render(request, 'account/dashboard.html', {'section': 'dashboard'})
+
+
+def register(request):
+    """Регистрация нового пользователя"""
+    if request.method == 'POST':
+        user_form = UserRegistrationForm(request.POST)
+        if user_form.is_valid():
+            # Создаем нового пользователя, но пока не сохраняем в базу данных
+            new_user = user_form.save(commit=False)
+            # Задаем пользователю зашифрованный пароль
+            new_user.set_password(user_form.cleaned_data['password2'])
+            # Сохраняем пользователя в базе данных
+            new_user.save()
+            return render(request, 'account/register.html', {'new_user': new_user})
+    else:
+        user_form = UserRegistrationForm()
+    return render(request, 'account/register.html', {'user_form': user_form})
